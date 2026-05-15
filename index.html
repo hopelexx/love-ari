@@ -834,15 +834,78 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 28px;
   }
-  .photo-card {
-    border-radius: 20px;
+
+  /* Heart photo in center of grid */
+  .photo-heart-center {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .photo-heart-wrap {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.4s;
+  }
+  .photo-heart-wrap:hover { transform: scale(1.06); }
+  .photo-heart-svg {
+    width: 200px;
+    height: 190px;
+    display: block;
+  }
+  .photo-heart-clip {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
+  }
+  .photo-heart-clip img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .photo-heart-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+  }
+  .photo-heart-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    pointer-events: none;
+  }
+  .photo-heart-placeholder span:first-child { font-size: 2.5rem; }
+  .photo-heart-placeholder span:last-child {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--mauve);
+    text-align: center;
+    max-width: 100px;
+  }
+
+  /* Decorative framed photo cards */
+  .photo-card {
+    border-radius: 16px;
+    overflow: visible;
     position: relative;
     aspect-ratio: 3/4;
     background: linear-gradient(135deg, var(--rose-pale), var(--blush));
-    border: 1px solid rgba(255,107,138,0.15);
     cursor: pointer;
     transition: transform 0.4s, box-shadow 0.4s;
     display: flex;
@@ -850,11 +913,60 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
+    /* Decorative double border frame */
+    border: 3px solid rgba(255,107,138,0.45);
+    box-shadow:
+      0 0 0 6px rgba(255,240,243,0.9),
+      0 0 0 10px rgba(255,107,138,0.2),
+      0 0 0 16px rgba(255,240,243,0.7),
+      0 12px 40px rgba(255,107,138,0.18);
   }
-  .photo-card:hover { transform: scale(1.03) translateY(-8px); box-shadow: 0 20px 50px rgba(255,107,138,0.2); }
+  .photo-card::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(255,107,138,0.25);
+    border-radius: 10px;
+    pointer-events: none;
+    z-index: 5;
+  }
+  /* Corner ornaments */
+  .photo-card::after {
+    content: '♡';
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    background: var(--rose);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: white;
+    line-height: 22px;
+    text-align: center;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(255,51,102,0.4);
+  }
+  .photo-corner-tl, .photo-corner-tr, .photo-corner-bl, .photo-corner-br {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    z-index: 6;
+    opacity: 0.6;
+  }
+  .photo-corner-tl { top: -2px; left: -2px; border-top: 2px solid var(--rose); border-left: 2px solid var(--rose); border-radius: 4px 0 0 0; }
+  .photo-corner-tr { top: -2px; right: -2px; border-top: 2px solid var(--rose); border-right: 2px solid var(--rose); border-radius: 0 4px 0 0; }
+  .photo-corner-bl { bottom: -2px; left: -2px; border-bottom: 2px solid var(--rose); border-left: 2px solid var(--rose); border-radius: 0 0 0 4px; }
+  .photo-corner-br { bottom: -2px; right: -2px; border-bottom: 2px solid var(--rose); border-right: 2px solid var(--rose); border-radius: 0 0 4px 0; }
+
+  .photo-card:hover { transform: scale(1.04) translateY(-10px); box-shadow: 0 0 0 6px rgba(255,240,243,0.9), 0 0 0 10px rgba(255,107,138,0.3), 0 0 0 16px rgba(255,240,243,0.7), 0 25px 60px rgba(255,107,138,0.3); }
   .photo-card.tall { grid-row: span 2; aspect-ratio: unset; }
-  .photo-placeholder-icon { font-size: 3rem; opacity: 0.5; }
-  .photo-placeholder-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.9rem; color: var(--mauve); text-align: center; padding: 0 20px; }
+  .photo-placeholder-icon { font-size: 3rem; opacity: 0.5; position: relative; z-index: 2; }
+  .photo-placeholder-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.9rem; color: var(--mauve); text-align: center; padding: 0 20px; position: relative; z-index: 2; }
   .photo-upload-hint {
     position: absolute;
     bottom: 15px;
@@ -862,9 +974,10 @@
     color: var(--rose);
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    background: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.9);
     padding: 4px 12px;
     border-radius: 20px;
+    z-index: 7;
   }
   .photo-card input[type="file"] {
     position: absolute;
@@ -879,6 +992,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 13px;
   }
 
   /* ========== REASONS ========== */
@@ -889,50 +1003,122 @@
   .reasons-header { text-align: center; margin-bottom: 60px; }
   .reasons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    max-width: 1200px;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
+    max-width: 1100px;
     margin: 0 auto;
   }
+  /* Number-only card */
   .reason-card {
     background: white;
-    border-radius: 16px;
-    padding: 20px 22px;
-    border: 1px solid rgba(255,107,138,0.1);
+    border-radius: 14px;
+    border: 2px solid rgba(255,107,138,0.18);
+    aspect-ratio: 1;
     display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s, border-color 0.25s;
     position: relative;
     overflow: hidden;
+    user-select: none;
   }
   .reason-card::before {
     content: '';
     position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: linear-gradient(to bottom, var(--rose), var(--rose-deep));
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.3s;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,107,138,0.07), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
   }
-  .reason-card:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(255,107,138,0.12); border-color: rgba(255,107,138,0.25); }
-  .reason-card:hover::before { transform: scaleY(1); }
+  .reason-card:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 10px 30px rgba(255,107,138,0.18); border-color: rgba(255,107,138,0.4); }
+  .reason-card:hover::before { opacity: 1; }
+  .reason-card.opened { background: linear-gradient(135deg, #fff0f3, #ffd6e0); border-color: var(--rose); }
   .reason-num {
     font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: var(--rose-light);
+    font-size: 1.3rem;
+    color: var(--rose);
     font-weight: 700;
-    flex-shrink: 0;
-    min-width: 36px;
+    line-height: 1;
   }
-  .reason-text {
+  /* Hidden — text inside. Displayed in heart modal overlay */
+  .reason-text { display: none; }
+
+  /* Heart popup overlay */
+  #reasonModal {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(61,28,40,0.6);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  #reasonModal.show { opacity: 1; pointer-events: all; }
+  .reason-modal-heart {
+    position: relative;
+    width: 420px;
+    max-width: 92vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: heartPopIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes heartPopIn {
+    from { transform: scale(0.4); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .reason-modal-heart svg.heart-bg { width: 100%; height: auto; display: block; filter: drop-shadow(0 20px 50px rgba(255,51,102,0.55)); }
+  .reason-modal-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 60px 70px;
+    text-align: center;
+  }
+  .reason-modal-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.15em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .reason-modal-text {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    color: var(--text-mid);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: white;
     line-height: 1.6;
-    padding-top: 4px;
+    text-shadow: 0 1px 8px rgba(180,0,50,0.4);
   }
+  .reason-modal-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 36px;
+    height: 36px;
+    background: white;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--rose-deep);
+    box-shadow: 0 4px 14px rgba(255,51,102,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    z-index: 10;
+  }
+  .reason-modal-close:hover { transform: scale(1.15); }
 
   /* ========== OPEN WHEN ========== */
   #open-when {
@@ -1117,11 +1303,15 @@
     .timeline-item:nth-child(even) .t-dot { grid-column: 1; }
     .t-empty { display: none; }
     .future-grid { grid-template-columns: 1fr; }
-    .photos-grid { grid-template-columns: repeat(2, 1fr); }
-    .photo-card.tall { grid-row: span 1; aspect-ratio: 3/4; }
+    .photos-grid { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+    .photo-heart-wrap { width: 140px; height: 140px; }
+    .photo-heart-svg { width: 140px; height: 133px; }
     .hero-heart-container { width: 240px; height: 240px; }
     .big-heart-3d svg { width: 220px; height: 220px; }
     .heart-initials-text { font-size: 2.2rem; }
+    .reasons-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 8px; }
+    .reason-modal-inner { padding: 40px 40px 55px; }
+    .reason-modal-text { font-size: 1.05rem; }
   }
 </style>
 </head>
@@ -1472,59 +1662,143 @@
   <div class="photos-header reveal">
     <div class="section-label" style="justify-content:center;">Воспоминания</div>
     <h2 class="section-title" style="text-align:center;">Наши <em>моменты</em></h2>
-    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--mauve);margin-top:10px;">Нажми на рамку чтобы добавить фото</p>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--mauve);margin-top:10px;">Нажми на рамку чтобы добавить фото ♡</p>
   </div>
-  <div class="photos-grid">
-    <div class="photo-card tall reveal" id="pc1">
+
+  <!-- Top row: 2 photos + heart center -->
+  <div class="photos-grid" style="grid-template-rows: auto auto auto; max-width:1000px;">
+
+    <!-- Row 1: photo | heart | photo -->
+    <div class="photo-card reveal" id="pc1" style="grid-column:1;grid-row:1;">
+      <div class="photo-corner-tl"></div><div class="photo-corner-tr"></div>
+      <div class="photo-corner-bl"></div><div class="photo-corner-br"></div>
       <input type="file" accept="image/*" onchange="loadPhoto(this,'pc1')">
       <div class="photo-placeholder-icon">📸</div>
-      <div class="photo-placeholder-text">Ваше любимое фото вместе</div>
+      <div class="photo-placeholder-text">Ваше фото вместе</div>
       <div class="photo-upload-hint">+ Добавить</div>
     </div>
-    <div class="photo-card reveal reveal-delay-1" id="pc2">
+
+    <!-- Heart center photo -->
+    <div style="grid-column:2;grid-row:1 / span 2;display:flex;align-items:center;justify-content:center;position:relative;">
+      <div class="photo-heart-wrap reveal" id="heartPhotoWrap">
+        <svg class="photo-heart-svg" viewBox="0 0 200 185" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="hfg" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#ffb3c6"/>
+              <stop offset="40%" stop-color="#ff6b8a"/>
+              <stop offset="100%" stop-color="#c40038"/>
+            </radialGradient>
+            <clipPath id="heartClip">
+              <path d="M100 170 C50 135, 5 100, 5 55 C5 25, 30 5, 58 5 C74 5, 88 14, 100 27 C112 14, 126 5, 142 5 C170 5, 195 25, 195 55 C195 100, 150 135, 100 170Z"/>
+            </clipPath>
+            <filter id="hfDrop">
+              <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#ff3366" flood-opacity="0.55"/>
+            </filter>
+          </defs>
+          <!-- Heart shadow bg -->
+          <path d="M100 170 C50 135, 5 100, 5 55 C5 25, 30 5, 58 5 C74 5, 88 14, 100 27 C112 14, 126 5, 142 5 C170 5, 195 25, 195 55 C195 100, 150 135, 100 170Z" fill="url(#hfg)" filter="url(#hfDrop)" opacity="0.25"/>
+          <!-- Heart main -->
+          <path d="M100 170 C50 135, 5 100, 5 55 C5 25, 30 5, 58 5 C74 5, 88 14, 100 27 C112 14, 126 5, 142 5 C170 5, 195 25, 195 55 C195 100, 150 135, 100 170Z" fill="url(#hfg)"/>
+          <!-- Image clipped inside heart -->
+          <image id="heartPhotoImg" href="" x="0" y="0" width="200" height="185" clip-path="url(#heartClip)" preserveAspectRatio="xMidYMid slice" style="display:none;"/>
+          <!-- Highlight -->
+          <ellipse cx="65" cy="42" rx="20" ry="13" fill="rgba(255,255,255,0.28)" transform="rotate(-35,65,42)" clip-path="url(#heartClip)"/>
+          <!-- Placeholder text inside heart -->
+          <g id="heartPlaceholder">
+            <text x="100" y="90" text-anchor="middle" font-size="32" fill="rgba(255,255,255,0.9)">📸</text>
+            <text x="100" y="115" text-anchor="middle" font-family="Cormorant Garamond,serif" font-style="italic" font-size="11" fill="rgba(255,255,255,0.8)">Наше фото</text>
+            <text x="100" y="130" text-anchor="middle" font-family="Cormorant Garamond,serif" font-style="italic" font-size="11" fill="rgba(255,255,255,0.8)">♡ нажми сюда ♡</text>
+          </g>
+          <!-- Decorative border on heart -->
+          <path d="M100 170 C50 135, 5 100, 5 55 C5 25, 30 5, 58 5 C74 5, 88 14, 100 27 C112 14, 126 5, 142 5 C170 5, 195 25, 195 55 C195 100, 150 135, 100 170Z" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+        </svg>
+        <input type="file" accept="image/*" class="photo-heart-input" onchange="loadHeartPhoto(this)" title="Добавить фото в сердце">
+        <!-- Pulsing ring -->
+        <div style="position:absolute;inset:-12px;border-radius:50%;border:2px solid rgba(255,107,138,0.3);animation:pulse 2s ease-in-out infinite;pointer-events:none;"></div>
+      </div>
+    </div>
+
+    <div class="photo-card reveal reveal-delay-1" id="pc2" style="grid-column:3;grid-row:1;">
+      <div class="photo-corner-tl"></div><div class="photo-corner-tr"></div>
+      <div class="photo-corner-bl"></div><div class="photo-corner-br"></div>
       <input type="file" accept="image/*" onchange="loadPhoto(this,'pc2')">
       <div class="photo-placeholder-icon">🌸</div>
       <div class="photo-placeholder-text">Первое свидание</div>
       <div class="photo-upload-hint">+ Добавить</div>
     </div>
-    <div class="photo-card reveal reveal-delay-2" id="pc3">
+
+    <!-- Row 2: photo | (heart spans) | photo -->
+    <div class="photo-card reveal" id="pc3" style="grid-column:1;grid-row:2;">
+      <div class="photo-corner-tl"></div><div class="photo-corner-tr"></div>
+      <div class="photo-corner-bl"></div><div class="photo-corner-br"></div>
       <input type="file" accept="image/*" onchange="loadPhoto(this,'pc3')">
       <div class="photo-placeholder-icon">✨</div>
       <div class="photo-placeholder-text">Счастливый момент</div>
       <div class="photo-upload-hint">+ Добавить</div>
     </div>
-    <div class="photo-card reveal" id="pc4">
+    <div class="photo-card reveal reveal-delay-2" id="pc4" style="grid-column:3;grid-row:2;">
+      <div class="photo-corner-tl"></div><div class="photo-corner-tr"></div>
+      <div class="photo-corner-bl"></div><div class="photo-corner-br"></div>
       <input type="file" accept="image/*" onchange="loadPhoto(this,'pc4')">
       <div class="photo-placeholder-icon">💫</div>
       <div class="photo-placeholder-text">Что-то смешное</div>
       <div class="photo-upload-hint">+ Добавить</div>
     </div>
-    <div class="photo-card reveal reveal-delay-1" id="pc5">
+
+    <!-- Row 3: 3 photos -->
+    <div class="photo-card reveal" id="pc5" style="grid-column:1;grid-row:3;">
+      <div class="photo-corner-tl"></div><div class="photo-corner-tr"></div>
+      <div class="photo-corner-bl"></div><div class="photo-corner-br"></div>
       <input type="file" accept="image/*" onchange="loadPhoto(this,'pc5')">
       <div class="photo-placeholder-icon">🌺</div>
       <div class="photo-placeholder-text">Любимое место</div>
       <div class="photo-upload-hint">+ Добавить</div>
     </div>
-    <div class="photo-card reveal reveal-delay-2" id="pc6">
+    <div class="photo-card reveal reveal-delay-1" id="pc6" style="grid-column:2;grid-row:3;">
+      <div class="photo-corner-tl"></div><div class="photo-corner-tr"></div>
+      <div class="photo-corner-bl"></div><div class="photo-corner-br"></div>
       <input type="file" accept="image/*" onchange="loadPhoto(this,'pc6')">
       <div class="photo-placeholder-icon">🎉</div>
       <div class="photo-placeholder-text">Праздник вместе</div>
       <div class="photo-upload-hint">+ Добавить</div>
     </div>
-    <div class="photo-card reveal" id="pc7">
+    <div class="photo-card reveal reveal-delay-2" id="pc7" style="grid-column:3;grid-row:3;">
+      <div class="photo-corner-tl"></div><div class="photo-corner-tr"></div>
+      <div class="photo-corner-bl"></div><div class="photo-corner-br"></div>
       <input type="file" accept="image/*" onchange="loadPhoto(this,'pc7')">
       <div class="photo-placeholder-icon">🥰</div>
       <div class="photo-placeholder-text">Просто мы</div>
       <div class="photo-upload-hint">+ Добавить</div>
     </div>
-    <div class="photo-card reveal reveal-delay-1" id="pc8">
-      <input type="file" accept="image/*" onchange="loadPhoto(this,'pc8')">
-      <div class="photo-placeholder-icon">🌙</div>
-      <div class="photo-placeholder-text">Вечер вместе</div>
-      <div class="photo-upload-hint">+ Добавить</div>
-    </div>
+
   </div>
 </section>
+
+<!-- REASON HEART MODAL -->
+<div id="reasonModal">
+  <div class="reason-modal-heart">
+    <svg class="heart-bg" viewBox="0 0 420 390" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="mhg" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ff8fab"/>
+          <stop offset="45%" stop-color="#ff3366"/>
+          <stop offset="100%" stop-color="#aa0030"/>
+        </radialGradient>
+        <filter id="mhf">
+          <feDropShadow dx="0" dy="18" stdDeviation="28" flood-color="#ff3366" flood-opacity="0.6"/>
+        </filter>
+      </defs>
+      <path d="M210 355 C110 290, 15 210, 15 115 C15 55, 65 12, 120 12 C155 12, 185 30, 210 58 C235 30, 265 12, 300 12 C355 12, 405 55, 405 115 C405 210, 310 290, 210 355Z" fill="url(#mhg)" filter="url(#mhf)"/>
+      <ellipse cx="135" cy="85" rx="42" ry="27" fill="rgba(255,255,255,0.22)" transform="rotate(-35,135,85)"/>
+      <ellipse cx="168" cy="62" rx="18" ry="11" fill="rgba(255,255,255,0.3)" transform="rotate(-30,168,62)"/>
+    </svg>
+    <div class="reason-modal-inner">
+      <div class="reason-modal-num" id="rmNum">причина №01</div>
+      <div class="reason-modal-text" id="rmText"></div>
+    </div>
+    <button class="reason-modal-close" onclick="closeReasonModal()">✕</button>
+  </div>
+</div>
 
 <!-- 100 REASONS -->
 <section id="reasons">
@@ -1545,6 +1819,67 @@
   </div>
   <div class="ow-grid" id="owGrid"></div>
 </section>
+
+<!-- LOVE LETTER SECTION -->
+<div style="padding:90px 40px;background:linear-gradient(160deg,#fff0f3 0%,#ffd6e0 60%,#ffb3c6 100%);text-align:center;position:relative;overflow:hidden;">
+  <div style="position:absolute;font-size:18vw;color:rgba(255,107,138,0.06);top:50%;left:50%;transform:translate(-50%,-50%);font-family:serif;pointer-events:none;user-select:none;">♡</div>
+  <div style="font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--rose);margin-bottom:18px;">Письмо для тебя</div>
+  <div style="max-width:680px;margin:0 auto;">
+    <p style="font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-style:italic;color:var(--text-dark);line-height:1.55;margin-bottom:28px;">"Я не умею красиво писать письма — но умею любить тебя по-настоящему. И если это письмо кажется простым — то только потому что моя любовь к тебе <em style='color:var(--rose-deep)'>проще некуда</em>: я просто выбираю тебя. Снова. Каждый день."</p>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--mauve);">— Твой Свят ♡</p>
+  </div>
+  <!-- Decorative floating hearts -->
+  <div style="position:absolute;top:15%;left:8%;font-size:2rem;opacity:0.18;animation:catBob 4s ease-in-out infinite;">💕</div>
+  <div style="position:absolute;top:20%;right:10%;font-size:1.5rem;opacity:0.18;animation:catBob 3s ease-in-out infinite 1s;">♡</div>
+  <div style="position:absolute;bottom:15%;left:12%;font-size:1.8rem;opacity:0.18;animation:catBob 5s ease-in-out infinite 0.5s;">🌸</div>
+  <div style="position:absolute;bottom:18%;right:8%;font-size:2rem;opacity:0.18;animation:catBob 4s ease-in-out infinite 1.5s;">💕</div>
+</div>
+
+<!-- LOVE STATS SECTION -->
+<div style="padding:90px 40px;background:linear-gradient(135deg,#3d1c28 0%,#5a2a3e 50%,#3d1c28 100%);text-align:center;position:relative;overflow:hidden;">
+  <div style="font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--rose-light);margin-bottom:12px;">Мы в цифрах</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:white;font-weight:400;margin-bottom:60px;">Наша <em style='font-style:italic;color:var(--rose-light)'>любовь</em> в числах</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px;max-width:900px;margin:0 auto 60px;">
+    <div class="reveal" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,107,138,0.25);border-radius:20px;padding:32px 20px;">
+      <div style="font-family:'Playfair Display',serif;font-size:3rem;color:var(--rose-light);font-weight:700;animation:pulse 2s ease-in-out infinite;">∞</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:rgba(255,179,198,0.8);margin-top:10px;">раз я думаю о тебе</div>
+    </div>
+    <div class="reveal reveal-delay-1" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,107,138,0.25);border-radius:20px;padding:32px 20px;">
+      <div style="font-family:'Playfair Display',serif;font-size:3rem;color:var(--rose-light);font-weight:700;animation:pulse 2s ease-in-out infinite 0.3s;">100</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:rgba(255,179,198,0.8);margin-top:10px;">причин любить тебя</div>
+    </div>
+    <div class="reveal reveal-delay-2" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,107,138,0.25);border-radius:20px;padding:32px 20px;">
+      <div style="font-family:'Playfair Display',serif;font-size:3rem;color:var(--rose-light);font-weight:700;animation:pulse 2s ease-in-out infinite 0.6s;" id="daysCount">...</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:rgba(255,179,198,0.8);margin-top:10px;">дней вместе</div>
+    </div>
+    <div class="reveal" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,107,138,0.25);border-radius:20px;padding:32px 20px;">
+      <div style="font-family:'Playfair Display',serif;font-size:3rem;color:var(--rose-light);font-weight:700;animation:pulse 2s ease-in-out infinite 0.9s;">1</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:rgba(255,179,198,0.8);margin-top:10px;">единственная такая ты</div>
+    </div>
+  </div>
+  <!-- Love promises -->
+  <div style="max-width:800px;margin:0 auto;">
+    <div style="font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--rose-light);margin-bottom:30px;">Мои обещания тебе</div>
+    <div style="display:flex;flex-direction:column;gap:16px;text-align:left;">
+      <div class="reveal" style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.06);border-radius:14px;padding:18px 24px;border:1px solid rgba(255,107,138,0.15);">
+        <span style="font-size:1.5rem;flex-shrink:0;">♡</span>
+        <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(255,213,224,0.9);">Всегда быть рядом — даже когда тяжело, даже когда не просят</span>
+      </div>
+      <div class="reveal reveal-delay-1" style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.06);border-radius:14px;padding:18px 24px;border:1px solid rgba(255,107,138,0.15);">
+        <span style="font-size:1.5rem;flex-shrink:0;">♡</span>
+        <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(255,213,224,0.9);">Никогда не давать тебе сомневаться в том, что ты любима</span>
+      </div>
+      <div class="reveal reveal-delay-2" style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.06);border-radius:14px;padding:18px 24px;border:1px solid rgba(255,107,138,0.15);">
+        <span style="font-size:1.5rem;flex-shrink:0;">♡</span>
+        <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(255,213,224,0.9);">Удивлять тебя — маленькими и большими способами</span>
+      </div>
+      <div class="reveal" style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.06);border-radius:14px;padding:18px 24px;border:1px solid rgba(255,107,138,0.15);">
+        <span style="font-size:1.5rem;flex-shrink:0;">♡</span>
+        <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(255,213,224,0.9);">Выбирать тебя снова и снова — каждый день до конца</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- FUTURE -->
 <section id="future">
@@ -1698,6 +2033,16 @@ for (let i = 0; i < 25; i++) {
   pWrap.appendChild(p);
 }
 
+// ─── DAYS COUNTER ─────────────────────────────────────────
+(function() {
+  const start = new Date(SECRET_PASSWORD.split('.').reverse().join('-'));
+  if (!isNaN(start)) {
+    const days = Math.floor((Date.now() - start) / 86400000);
+    const el = document.getElementById('daysCount');
+    if (el && days > 0) el.textContent = days;
+  }
+})();
+
 // ─── NAV SCROLL ───────────────────────────────────────────
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
@@ -1821,6 +2166,10 @@ const reasons = [
   "Ты — та, о которой я думаю засыпая",
   "Потому что ты — это ты. И этого уже более чем достаточно",
   "Потому что я люблю тебя больше, чем умею выразить словами",
+  "Потому что каждое утро я просыпаюсь и первая мысль — о тебе",
+  "Потому что ты делаешь меня тем человеком, которым я хочу быть",
+  "Потому что наша история — самая любимая из всех, что я знаю",
+  "Потому что любить тебя — это лучшее, что я делаю в этой жизни",
   "Потому что с тобой — это не просто жизнь. Это что-то большее ♡"
 ];
 
@@ -1828,14 +2177,45 @@ const grid = document.getElementById('reasonsGrid');
 reasons.forEach((r, i) => {
   const card = document.createElement('div');
   card.className = 'reason-card reveal';
-  card.innerHTML = `<div class="reason-num">${String(i+1).padStart(2,'0')}</div><div class="reason-text">${r}</div>`;
+  card.innerHTML = `<div class="reason-num">${String(i+1).padStart(2,'0')}</div><div class="reason-text" style="display:none">${r}</div>`;
+  card.addEventListener('click', () => openReasonModal(i+1, r, card));
   grid.appendChild(card);
   obs.observe(card);
 });
 
+function openReasonModal(num, text, card) {
+  document.getElementById('rmNum').textContent = `причина №${String(num).padStart(2,'0')}`;
+  document.getElementById('rmText').textContent = text;
+  document.getElementById('reasonModal').classList.add('show');
+  if (card) card.classList.add('opened');
+  document.body.style.overflow = 'hidden';
+}
+function closeReasonModal() {
+  document.getElementById('reasonModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.getElementById('reasonModal').addEventListener('click', function(e) {
+  if (e.target === this) closeReasonModal();
+});
+
+// ─── HEART PHOTO ──────────────────────────────────────────
+function loadHeartPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById('heartPhotoImg');
+    img.setAttribute('href', e.target.result);
+    img.style.display = '';
+    const placeholder = document.getElementById('heartPlaceholder');
+    if (placeholder) placeholder.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
 // ─── OPEN WHEN ─────────────────────────────────────────────
 const openWhenData = [
-  { icon: '💼', trigger: 'Открой когда ты на работе', msg: 'Привет, моя работящая ♡ Знаешь что? Пока ты там занята и справляешься со всем — я горжусь тобой. Ты делаешь это блестяще. Скоро увидимся, и я обниму тебя так крепко, что весь рабочий день вылетит из головы.' },
+  { icon: '💼', trigger: 'Открой когда я на работе', msg: 'Привет, моя любимая работяга ♡ Ты сейчас там, справляешься со всем — и это так невероятно красиво. Знаешь что? Пока ты занята и блистаешь — я думаю о тебе. Каждый твой рабочий день — это ещё один день, который ты проживаешь с силой и грацией. Я тебя жду. Возвращайся поскорее — мои объятия уже скучают. Ты самая лучшая. ♡' },
   { icon: '😔', trigger: 'Открой когда нет настроения', msg: 'Эй. Ты не одна. Я знаю, иногда всё кажется серым — и это нормально. Но я хочу, чтобы ты знала: ты самая сильная и красивая даже в самый пасмурный день. Позвони мне. Или просто знай — я рядом.' },
   { icon: '🌙', trigger: 'Открой когда не можешь уснуть', msg: 'Закрой глаза. Представь, что я рядом. Моя рука у тебя в руке, и я шепчу тебе тихонько: всё хорошо. Ты в безопасности. Ты любима. Спи, моя красавица — завтра будет новый день, и в нём буду я.' },
   { icon: '🥺', trigger: 'Открой когда скучаешь по мне', msg: 'Я тоже скучаю — прямо сейчас, в эту самую секунду. Знаешь что странно? Когда тебя нет рядом, весь мир немного тусклее. Ты — мой любимый цвет жизни. Скоро увидимся. Считаю минуты ♡' },
@@ -1851,6 +2231,10 @@ const openWhenData = [
   { icon: '🌺', trigger: 'Открой когда скучно', msg: 'Скучно? Тогда вот: напиши мне что-то неожиданное. Или вспомни наш смешной момент. Или посмотри на наши фотки здесь. Или просто знай — с тобой рядом мне никогда не скучно ♡' },
   { icon: '✨', trigger: 'Открой когда тебе одиноко', msg: 'Ты никогда не одна. Даже когда меня нет рядом физически — я думаю о тебе. Прямо сейчас. В эту самую секунду. Ты занимаешь столько места в моём сердце, что одиночеству там просто не осталось места.' },
   { icon: '🎂', trigger: 'Открой в твой день рождения', msg: 'С днём рождения, моя любимая ♡ Ты появилась на свет — и мир стал лучше. Я счастлив, что судьба привела меня к тебе. Желаю тебе всего, что ты заслуживаешь — а ты заслуживаешь всего самого лучшего.' },
+  { icon: '🌊', trigger: 'Открой когда злишься на меня', msg: 'Ты сейчас злишься — и это окей. Я принимаю тебя любой. Злой, обиженной, расстроенной — всякой. Я не ухожу. Когда будешь готова поговорить — я здесь. Только знай: в глубине всего этого — я тебя люблю. И это не изменится.' },
+  { icon: '🌈', trigger: 'Открой когда нужно чудо', msg: 'Ты уже чудо. Нет, серьёзно — ты сама по себе чудо. То, что ты существуешь, что мы нашли друг друга из миллиардов людей — это уже невероятно. Жизнь ещё подкинет тебе что-то хорошее. Верь. И я верю в тебя.' },
+  { icon: '💃', trigger: 'Открой когда хочется танцевать', msg: 'Тогда танцуй! Прямо сейчас. Одна, в комнате, в пижаме — неважно. Ты красивее всех на любой вечеринке. А я бы с удовольствием составил тебе компанию — держи мысленно мою руку ♡' },
+  { icon: '🍕', trigger: 'Открой когда голодная', msg: 'Моя голодная котёнок ♡ Иди скорее поешь — ты всё равно красивее всех даже с едой за щекой. Только не забудь потом рассказать мне что ты съела. Я всегда хочу знать о твоих маленьких радостях.' },
 ];
 
 const owGrid = document.getElementById('owGrid');
