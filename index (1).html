@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Свят & Ариана ♡</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #ff6b8a;
+    --rose-light: #ffb3c6;
+    --rose-pale: #fff0f3;
+    --rose-deep: #e63362;
+    --blush: #ffd6e0;
+    --cream: #fff8f9;
+    --mauve: #c9788a;
+    --text-dark: #3d1c28;
+    --text-mid: #7a4258;
+    --gold: #d4a0a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 20px; height: 20px;
+    background: radial-gradient(circle, #ff6b8a, #ff3366);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    box-shadow: 0 0 15px rgba(255,107,138,0.6);
+  }
+  .cursor-ring {
+    width: 40px; height: 40px;
+    border: 1.5px solid rgba(255,107,138,0.5);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.2s, height 0.2s;
+  }
+
+  /* PRELOADER */
+  #preloader {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #fff0f3 0%, #ffd6e0 50%, #ffb3c6 100%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease, visibility 1s ease;
+  }
+  #preloader.hide { opacity: 0; visibility: hidden; }
+
+  .preloader-heart-wrap {
+    position: relative;
+    width: 200px; height: 200px;
+    margin-bottom: 40px;
+  }
+
+  /* 3D HEART - CSS only */
+  .heart-3d {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: heartbeat3d 1.6s ease-in-out infinite, float3d 4s ease-in-out infinite;
+    filter: drop-shadow(0 20px 40px rgba(255,51,102,0.5));
+  }
+  .heart-3d svg { width: 180px; height: 180px; }
+
+  @keyframes heartbeat3d {
+    0%, 100% { transform: scale(1) rotateY(0deg); }
+    15% { transform: scale(1.12) rotateY(5deg); }
+    30% { transform: scale(1) rotateY(-3deg); }
+    45% { transform: scale(1.06) rotateY(3deg); }
+    60% { transform: scale(1) rotateY(0deg); }
+  }
+  @keyframes float3d {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .preloader-initials {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.15em;
+    animation: shimmer 2s ease-in-out infinite;
+    text-shadow: 0 2px 20px rgba(255,51,102,0.4);
+  }
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+
+  .preloader-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--rose-deep);
+    margin-top: 15px;
+    opacity: 0;
+    animation: fadeInUp 1s 1s ease forwards;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .preloader-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 30px;
+  }
+  .preloader-dots span {
+    width: 8px; height: 8px;
+    background: var(--rose);
+    border-radius: 50%;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+  .preloader-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .preloader-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+    40% { transform: scale(1.2); opacity: 1; }
+  }
+
+  /* FLOATING PARTICLES */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    font-size: 1.2rem;
+    opacity: 0.15;
+    animation: floatParticle linear infinite;
+  }
+  @keyframes floatParticle {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.15; }
+    90% { opacity: 0.15; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(20px);
+    background: rgba(255,240,243,0.8);
+    border-bottom: 1px solid rgba(255,107,138,0.15);
+    transition: all 0.3s;
+  }
+  nav.scrolled {
+    padding: 12px 40px;
+    background: rgba(255,248,249,0.95);
+    box-shadow: 0 4px 30px rgba(255,107,138,0.1);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--rose-deep);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-logo-heart { animation: pulse 1.5s ease-in-out infinite; display: inline-block; }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  .nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--text-mid);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 100%;
+    height: 1px;
+    background: var(--rose);
+    transition: right 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--rose-deep); }
+  .nav-links a:hover::after { right: 0; }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ========== HERO ========== */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 40px 60px;
+    background: linear-gradient(160deg, #fff0f3 0%, #ffd6e0 40%, #ffb3c6 70%, #ff8fab 100%);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 20vw;
+    color: rgba(255,107,138,0.05);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    user-select: none;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+
+  .hero-heart-container {
+    position: relative;
+    width: 320px; height: 320px;
+    margin: 0 auto 40px;
+  }
+
+  /* BIG 3D HEART */
+  .big-heart-3d {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bigHeartFloat 4s ease-in-out infinite;
+    filter: drop-shadow(0 30px 60px rgba(255,51,102,0.45)) drop-shadow(0 10px 30px rgba(255,107,138,0.3));
+  }
+  .big-heart-3d svg { width: 300px; height: 300px; }
+
+  @keyframes bigHeartFloat {
+    0%, 100% { transform: translateY(0px) rotateY(0deg); }
+    25% { transform: translateY(-12px) rotateY(5deg); }
+    50% { transform: translateY(-20px) rotateY(0deg); }
+    75% { transform: translateY(-12px) rotateY(-5deg); }
+  }
+
+  .heart-initials-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .heart-initials-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 10px rgba(180,0,50,0.4), 0 4px 20px rgba(255,100,120,0.3);
+    letter-spacing: 0.12em;
+    animation: initialsGlow 2s ease-in-out infinite;
+  }
+  @keyframes initialsGlow {
+    0%, 100% { text-shadow: 0 2px 10px rgba(180,0,50,0.4), 0 4px 20px rgba(255,100,120,0.3); }
+    50% { text-shadow: 0 2px 20px rgba(255,255,255,0.6), 0 4px 30px rgba(255,100,120,0.5), 0 0 40px rgba(255,50,100,0.4); }
+  }
+
+  /* Orbiting hearts */
+  .orbit-wrap {
+    position: absolute;
+    inset: -30px;
+    animation: orbit 8s linear infinite;
+  }
+  .orbit-wrap-2 {
+    position: absolute;
+    inset: -10px;
+    animation: orbit 12s linear infinite reverse;
+  }
+  @keyframes orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .orbit-heart {
+    position: absolute;
+    font-size: 1.2rem;
+    top: 0; left: 50%;
+    transform: translate(-50%, 0);
+    animation: orbit-counter 8s linear infinite;
+    filter: drop-shadow(0 2px 6px rgba(255,107,138,0.5));
+  }
+  .orbit-wrap-2 .orbit-heart { animation-duration: 12s; animation-direction: reverse; }
+  @keyframes orbit-counter { from { transform: translate(-50%,0) rotate(0deg); } to { transform: translate(-50%,0) rotate(-360deg); } }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--mauve);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeInUp 1s 0.5s ease forwards;
+  }
+  .hero-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,107,138,0.3);
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--rose-deep);
+    text-transform: uppercase;
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeInUp 1s 0.8s ease forwards;
+    box-shadow: 0 8px 30px rgba(255,107,138,0.15);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--mauve);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: fadeInUp 1s 1.2s both;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--rose), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleY(0.3); opacity: 0.5; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+
+  /* ========== ABOUT ========== */
+  #about {
+    padding: 100px 40px;
+    background: white;
+    position: relative;
+    overflow: hidden;
+  }
+  #about::before {
+    content: '♡';
+    position: absolute;
+    font-size: 40vw;
+    color: rgba(255,107,138,0.025);
+    right: -10%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: serif;
+    pointer-events: none;
+  }
+  .section-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before, .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 40px;
+    height: 1px;
+    background: var(--rose-light);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text-dark);
+    margin-bottom: 30px;
+  }
+  .section-title em { color: var(--rose-deep); font-style: italic; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .about-text-col { position: relative; }
+  .about-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    line-height: 1.9;
+    color: var(--text-mid);
+  }
+  .about-text p { margin-bottom: 20px; }
+  .about-card-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .info-card {
+    background: linear-gradient(135deg, var(--rose-pale), #fff);
+    border: 1px solid rgba(255,107,138,0.15);
+    border-radius: 20px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .info-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,107,138,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .info-card:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(255,107,138,0.15); }
+  .info-card:hover::before { opacity: 1; }
+  .info-icon { font-size: 2rem; flex-shrink: 0; }
+  .info-card-body { }
+  .info-card-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--mauve); margin-bottom: 4px; }
+  .info-card-value { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text-dark); }
+
+  /* ========== QUOTE BANNER ========== */
+  .quote-banner {
+    padding: 80px 40px;
+    background: linear-gradient(135deg, #ff6b8a 0%, #ff3366 50%, #e6004c 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .quote-banner::before {
+    content: '❝';
+    position: absolute;
+    font-size: 20rem;
+    color: rgba(255,255,255,0.06);
+    top: -50px;
+    left: 20px;
+    line-height: 1;
+    font-family: Georgia, serif;
+  }
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-style: italic;
+    color: white;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+    position: relative;
+  }
+  .quote-author {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+  }
+
+  /* ========== TIMELINE ========== */
+  #timeline {
+    padding: 100px 40px;
+    background: var(--rose-pale);
+    position: relative;
+  }
+  .timeline-center { max-width: 800px; margin: 0 auto; }
+  .timeline-header { text-align: center; margin-bottom: 70px; }
+
+  .timeline-list { position: relative; }
+  .timeline-list::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--rose-light), var(--rose), var(--rose-light), transparent);
+    transform: translateX(-50%);
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    margin-bottom: 50px;
+    align-items: center;
+  }
+  .timeline-item:nth-child(odd) .t-content { grid-column: 1; text-align: right; padding-right: 40px; }
+  .timeline-item:nth-child(odd) .t-dot { grid-column: 2; }
+  .timeline-item:nth-child(odd) .t-empty { grid-column: 3; }
+  .timeline-item:nth-child(even) .t-empty { grid-column: 1; }
+  .timeline-item:nth-child(even) .t-dot { grid-column: 2; }
+  .timeline-item:nth-child(even) .t-content { grid-column: 3; text-align: left; padding-left: 40px; }
+
+  .t-dot {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(255,107,138,0.4);
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s;
+  }
+  .t-dot:hover { transform: scale(1.2); }
+
+  .t-content { }
+  .t-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 20px rgba(255,107,138,0.08);
+    border: 1px solid rgba(255,107,138,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .t-card:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(255,107,138,0.15); }
+  .t-date { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--rose); text-transform: uppercase; margin-bottom: 6px; }
+  .t-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text-dark); margin-bottom: 8px; }
+  .t-desc { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text-mid); line-height: 1.6; }
+
+  /* ========== PHOTOS ========== */
+  #photos {
+    padding: 100px 40px;
+    background: white;
+  }
+  .photos-header { text-align: center; margin-bottom: 60px; }
+  .photos-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .photo-card {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--rose-pale), var(--blush));
+    border: 1px solid rgba(255,107,138,0.15);
+    cursor: pointer;
+    transition: transform 0.4s, box-shadow 0.4s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .photo-card:hover { transform: scale(1.03) translateY(-8px); box-shadow: 0 20px 50px rgba(255,107,138,0.2); }
+  .photo-card.tall { grid-row: span 2; aspect-ratio: unset; }
+  .photo-placeholder-icon { font-size: 3rem; opacity: 0.5; }
+  .photo-placeholder-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.9rem; color: var(--mauve); text-align: center; padding: 0 20px; }
+  .photo-upload-hint {
+    position: absolute;
+    bottom: 15px;
+    font-size: 0.7rem;
+    color: var(--rose);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.8);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .photo-card input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .photo-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ========== REASONS ========== */
+  #reasons {
+    padding: 100px 40px;
+    background: linear-gradient(160deg, var(--rose-pale) 0%, white 50%, var(--rose-pale) 100%);
+  }
+  .reasons-header { text-align: center; margin-bottom: 60px; }
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .reason-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 22px;
+    border: 1px solid rgba(255,107,138,0.1);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .reason-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--rose), var(--rose-deep));
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s;
+  }
+  .reason-card:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(255,107,138,0.12); border-color: rgba(255,107,138,0.25); }
+  .reason-card:hover::before { transform: scaleY(1); }
+  .reason-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--rose-light);
+    font-weight: 700;
+    flex-shrink: 0;
+    min-width: 36px;
+  }
+  .reason-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    padding-top: 4px;
+  }
+
+  /* ========== OPEN WHEN ========== */
+  #open-when {
+    padding: 100px 40px;
+    background: linear-gradient(135deg, #3d1c28 0%, #5a2a3e 50%, #3d1c28 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  #open-when::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff6b8a' fill-opacity='0.04'%3E%3Cpath d='M30 0C13.43 0 0 13.43 0 30s13.43 30 30 30 30-13.43 30-30S46.57 0 30 0zm0 55C16.19 55 5 43.81 5 30S16.19 5 30 5s25 11.19 25 25S43.81 55 30 55z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .ow-header { text-align: center; margin-bottom: 60px; }
+  .ow-header .section-label { color: var(--rose-light); justify-content: center; }
+  .ow-header .section-title { color: white; }
+  .ow-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: rgba(255,179,198,0.7); margin-top: 12px; }
+
+  .ow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .ow-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,107,138,0.2);
+    border-radius: 20px;
+    padding: 28px;
+    cursor: pointer;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+  .ow-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,107,138,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .ow-card:hover { transform: translateY(-6px); border-color: rgba(255,107,138,0.5); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+  .ow-card:hover::after { opacity: 1; }
+  .ow-card.open { background: rgba(255,107,138,0.12); border-color: rgba(255,107,138,0.5); }
+  .ow-card-icon { font-size: 2.2rem; margin-bottom: 14px; }
+  .ow-card-trigger {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: white;
+    margin-bottom: 16px;
+  }
+  .ow-message {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--rose-light);
+    line-height: 1.7;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease, opacity 0.5s;
+    opacity: 0;
+  }
+  .ow-card.open .ow-message { max-height: 300px; opacity: 1; }
+  .ow-tap-hint {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,107,138,0.5);
+    text-transform: uppercase;
+    margin-top: 14px;
+    transition: opacity 0.3s;
+  }
+  .ow-card.open .ow-tap-hint { opacity: 0; }
+
+  /* ========== FUTURE ========== */
+  #future {
+    padding: 100px 40px;
+    background: white;
+  }
+  .future-header { text-align: center; margin-bottom: 70px; }
+  .future-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .future-card {
+    background: linear-gradient(160deg, var(--rose-pale), white);
+    border: 1px solid rgba(255,107,138,0.12);
+    border-radius: 24px;
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .future-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rose), var(--rose-deep), var(--rose));
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .future-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(255,107,138,0.12); }
+  .future-card:hover::before { transform: scaleX(1); }
+  .future-icon { font-size: 2.8rem; margin-bottom: 16px; }
+  .future-card-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text-dark); margin-bottom: 12px; }
+  .future-card-text { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--text-mid); line-height: 1.6; }
+
+  /* ========== FINAL QUOTE ========== */
+  .final-section {
+    padding: 120px 40px;
+    background: linear-gradient(160deg, #fff0f3 0%, #ffd6e0 50%, #ffb3c6 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .final-heart-small {
+    font-size: 3rem;
+    animation: pulse 1.5s ease-in-out infinite;
+    display: inline-block;
+    margin-bottom: 30px;
+  }
+  .final-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 3rem);
+    font-style: italic;
+    color: var(--text-dark);
+    max-width: 900px;
+    margin: 0 auto 30px;
+    line-height: 1.5;
+  }
+  .final-quote em { color: var(--rose-deep); }
+  .final-sign {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--mauve);
+    letter-spacing: 0.1em;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px;
+    background: var(--text-dark);
+    text-align: center;
+  }
+  .footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: rgba(255,255,255,0.5);
+    font-size: 1rem;
+  }
+  .footer-love { color: var(--rose); }
+
+  /* REVEAL ANIMATION */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 768px) {
+    nav { padding: 15px 20px; }
+    .nav-links { gap: 15px; display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .timeline-list::before { left: 25px; }
+    .timeline-item { grid-template-columns: 25px 1fr; gap: 15px; }
+    .timeline-item:nth-child(odd) .t-content,
+    .timeline-item:nth-child(even) .t-content { grid-column: 2; text-align: left; padding: 0; }
+    .timeline-item:nth-child(odd) .t-dot,
+    .timeline-item:nth-child(even) .t-dot { grid-column: 1; }
+    .t-empty { display: none; }
+    .future-grid { grid-template-columns: 1fr; }
+    .photos-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-card.tall { grid-row: span 1; aspect-ratio: 3/4; }
+    .hero-heart-container { width: 240px; height: 240px; }
+    .big-heart-3d svg { width: 220px; height: 220px; }
+    .heart-initials-text { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="preloader-heart-wrap">
+    <div class="heart-3d">
+      <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="hg1" cx="35%" cy="35%" r="60%">
+            <stop offset="0%" stop-color="#ff9ab5"/>
+            <stop offset="40%" stop-color="#ff3366"/>
+            <stop offset="100%" stop-color="#c40038"/>
+          </radialGradient>
+          <radialGradient id="hg2" cx="70%" cy="70%" r="40%">
+            <stop offset="0%" stop-color="#ff6b8a" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#c40038" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="hf1">
+            <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#ff3366" flood-opacity="0.5"/>
+          </filter>
+        </defs>
+        <path d="M100 160 C60 130, 10 100, 10 60 C10 30, 35 10, 60 10 C75 10, 88 18, 100 30 C112 18, 125 10, 140 10 C165 10, 190 30, 190 60 C190 100, 140 130, 100 160Z" fill="url(#hg1)" filter="url(#hf1)"/>
+        <path d="M100 160 C60 130, 10 100, 10 60 C10 30, 35 10, 60 10 C75 10, 88 18, 100 30 C112 18, 125 10, 140 10 C165 10, 190 30, 190 60 C190 100, 140 130, 100 160Z" fill="url(#hg2)"/>
+        <ellipse cx="65" cy="45" rx="18" ry="12" fill="rgba(255,255,255,0.25)" transform="rotate(-30, 65, 45)"/>
+        <ellipse cx="80" cy="35" rx="8" ry="5" fill="rgba(255,255,255,0.35)" transform="rotate(-25, 80, 35)"/>
+      </svg>
+    </div>
+  </div>
+  <div class="preloader-initials">S ♡ A</div>
+  <div class="preloader-tagline">Загружается что-то особенное для тебя...</div>
+  <div class="preloader-dots">
+    <span></span><span></span><span></span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <span class="nav-logo-heart">♡</span> Свят & Ариана
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#timeline">История</a></li>
+    <li><a href="#photos">Фото</a></li>
+    <li><a href="#reasons">100 причин</a></li>
+    <li><a href="#open-when">Открой когда...</a></li>
+    <li><a href="#future">Будущее</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-text">LOVE</div>
+
+  <div class="hero-heart-container">
+    <div class="orbit-wrap">
+      <div class="orbit-heart">🌸</div>
+    </div>
+    <div class="orbit-wrap-2">
+      <div class="orbit-heart" style="top:auto;bottom:0;left:50%;">💫</div>
+    </div>
+    <div class="big-heart-3d">
+      <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="bhg1" cx="35%" cy="30%" r="65%">
+            <stop offset="0%" stop-color="#ffb3c6"/>
+            <stop offset="35%" stop-color="#ff6b8a"/>
+            <stop offset="70%" stop-color="#ff3366"/>
+            <stop offset="100%" stop-color="#b80038"/>
+          </radialGradient>
+          <radialGradient id="bhg2" cx="65%" cy="65%" r="50%">
+            <stop offset="0%" stop-color="#ff6b8a" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#b80038" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="bhg3" cx="20%" cy="20%" r="30%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.6)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </radialGradient>
+          <filter id="bhf">
+            <feDropShadow dx="0" dy="15" stdDeviation="20" flood-color="#ff3366" flood-opacity="0.5"/>
+            <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#ff6b8a" flood-opacity="0.4"/>
+          </filter>
+        </defs>
+        <!-- Main heart body -->
+        <path d="M100 162 C55 128, 8 96, 8 56 C8 27, 34 7, 60 7 C76 7, 90 16, 100 28 C110 16, 124 7, 140 7 C166 7, 192 27, 192 56 C192 96, 145 128, 100 162Z" fill="url(#bhg1)" filter="url(#bhf)"/>
+        <!-- Shading overlay -->
+        <path d="M100 162 C55 128, 8 96, 8 56 C8 27, 34 7, 60 7 C76 7, 90 16, 100 28 C110 16, 124 7, 140 7 C166 7, 192 27, 192 56 C192 96, 145 128, 100 162Z" fill="url(#bhg2)"/>
+        <!-- Highlight -->
+        <path d="M100 162 C55 128, 8 96, 8 56 C8 27, 34 7, 60 7 C76 7, 90 16, 100 28 C110 16, 124 7, 140 7 C166 7, 192 27, 192 56 C192 96, 145 128, 100 162Z" fill="url(#bhg3)"/>
+        <!-- Main highlight blob -->
+        <ellipse cx="62" cy="42" rx="22" ry="14" fill="rgba(255,255,255,0.28)" transform="rotate(-35, 62, 42)"/>
+        <ellipse cx="78" cy="30" rx="10" ry="6" fill="rgba(255,255,255,0.38)" transform="rotate(-30, 78, 30)"/>
+        <!-- Bottom 3D shadow hint -->
+        <path d="M40 120 Q100 155, 160 120" stroke="rgba(0,0,0,0.06)" stroke-width="8" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="heart-initials-overlay">
+      <div class="heart-initials-text">S + A</div>
+    </div>
+  </div>
+
+  <h1 class="hero-title">Ты — моя <em>любимая</em><br>история</h1>
+  <p class="hero-subtitle">Написанная сердцем, прожитая вместе</p>
+  <div class="hero-date-badge">
+    🌸 &nbsp; Свят & Ариана &nbsp; 🌸
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Листай</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text-col reveal">
+      <div class="section-label">О нас</div>
+      <h2 class="section-title">Двое, которые<br>нашли <em>друг друга</em></h2>
+      <div class="about-text">
+        <p>[Здесь напиши как вы познакомились — когда это было, где это произошло, что ты почувствовал когда впервые увидел её. Можешь написать 2–3 абзаца о своей истории.]</p>
+        <p>[Второй абзац — расскажи что-то особенное про Ариану. Что тебя в ней поразило. Какая она.] </p>
+        <p>[Третий абзац — про вас двоих вместе. Что изменилось в твоей жизни с тех пор как она появилась.]</p>
+      </div>
+    </div>
+    <div class="about-card-col reveal reveal-delay-2">
+      <div class="info-card">
+        <div class="info-icon">🌹</div>
+        <div class="info-card-body">
+          <div class="info-card-label">Её зовут</div>
+          <div class="info-card-value">Ариана</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">💙</div>
+        <div class="info-card-body">
+          <div class="info-card-label">Его зовут</div>
+          <div class="info-card-value">Свят</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">✨</div>
+        <div class="info-card-body">
+          <div class="info-card-label">Наш возраст</div>
+          <div class="info-card-value">18 & 17 лет</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📍</div>
+        <div class="info-card-body">
+          <div class="info-card-label">Откуда мы</div>
+          <div class="info-card-value">[Напиши город]</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🗓️</div>
+        <div class="info-card-body">
+          <div class="info-card-label">Вместе с</div>
+          <div class="info-card-value">[Дата знакомства]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BANNER -->
+<div class="quote-banner">
+  <p class="quote-text">"С тобой я хочу прожить не просто жизнь, а тысячу жизней — где в каждой из них я буду любить тебя всё сильнее."</p>
+  <p class="quote-author">— Навсегда твой ♡</p>
+</div>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="timeline-center">
+    <div class="timeline-header reveal">
+      <div class="section-label" style="justify-content:center;">Наша история</div>
+      <h2 class="section-title" style="text-align:center;">Моменты, которые<br>стали <em>нашими</em></h2>
+    </div>
+    <div class="timeline-list">
+
+      <div class="timeline-item reveal">
+        <div class="t-content">
+          <div class="t-card">
+            <div class="t-date">[Дата]</div>
+            <div class="t-title">Первая встреча</div>
+            <div class="t-desc">[Напиши где и как вы впервые увидели друг друга. Что было в тот момент. Что ты почувствовал.]</div>
+          </div>
+        </div>
+        <div class="t-dot">🌸</div>
+        <div class="t-empty"></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="t-empty"></div>
+        <div class="t-dot">💬</div>
+        <div class="t-content">
+          <div class="t-card">
+            <div class="t-date">[Дата]</div>
+            <div class="t-title">Первое сообщение</div>
+            <div class="t-desc">[Кто написал первым? Как начался ваш разговор? Помнишь первые слова?]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="t-content">
+          <div class="t-card">
+            <div class="t-date">[Дата]</div>
+            <div class="t-title">Первое свидание</div>
+            <div class="t-desc">[Расскажи про первое свидание — куда пошли, что делали, как себя чувствовали. Всё, что ты помнишь.]</div>
+          </div>
+        </div>
+        <div class="t-dot">🥂</div>
+        <div class="t-empty"></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="t-empty"></div>
+        <div class="t-dot">❤️</div>
+        <div class="t-content">
+          <div class="t-card">
+            <div class="t-date">[Дата]</div>
+            <div class="t-title">Первое "Я люблю тебя"</div>
+            <div class="t-desc">[Как это случилось? Кто сказал первым? Что ты почувствовал в тот момент?]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="t-content">
+          <div class="t-card">
+            <div class="t-date">[Дата]</div>
+            <div class="t-title">Особенный момент</div>
+            <div class="t-desc">[Добавь любой важный момент вашей истории — путешествие, праздник, что-то смешное или трогательное.]</div>
+          </div>
+        </div>
+        <div class="t-dot">🌟</div>
+        <div class="t-empty"></div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="t-empty"></div>
+        <div class="t-dot">💫</div>
+        <div class="t-content">
+          <div class="t-card">
+            <div class="t-date">Сейчас</div>
+            <div class="t-title">Наша история продолжается</div>
+            <div class="t-desc">Каждый день с тобой — это новая страница, которую я хочу писать снова и снова.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOS -->
+<section id="photos">
+  <div class="photos-header reveal">
+    <div class="section-label" style="justify-content:center;">Воспоминания</div>
+    <h2 class="section-title" style="text-align:center;">Наши <em>моменты</em></h2>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--mauve);margin-top:10px;">Нажми на рамку чтобы добавить фото</p>
+  </div>
+  <div class="photos-grid">
+    <div class="photo-card tall reveal" id="pc1">
+      <input type="file" accept="image/*" onchange="loadPhoto(this,'pc1')">
+      <div class="photo-placeholder-icon">📸</div>
+      <div class="photo-placeholder-text">Ваше любимое фото вместе</div>
+      <div class="photo-upload-hint">+ Добавить</div>
+    </div>
+    <div class="photo-card reveal reveal-delay-1" id="pc2">
+      <input type="file" accept="image/*" onchange="loadPhoto(this,'pc2')">
+      <div class="photo-placeholder-icon">🌸</div>
+      <div class="photo-placeholder-text">Первое свидание</div>
+      <div class="photo-upload-hint">+ Добавить</div>
+    </div>
+    <div class="photo-card reveal reveal-delay-2" id="pc3">
+      <input type="file" accept="image/*" onchange="loadPhoto(this,'pc3')">
+      <div class="photo-placeholder-icon">✨</div>
+      <div class="photo-placeholder-text">Счастливый момент</div>
+      <div class="photo-upload-hint">+ Добавить</div>
+    </div>
+    <div class="photo-card reveal" id="pc4">
+      <input type="file" accept="image/*" onchange="loadPhoto(this,'pc4')">
+      <div class="photo-placeholder-icon">💫</div>
+      <div class="photo-placeholder-text">Что-то смешное</div>
+      <div class="photo-upload-hint">+ Добавить</div>
+    </div>
+    <div class="photo-card reveal reveal-delay-1" id="pc5">
+      <input type="file" accept="image/*" onchange="loadPhoto(this,'pc5')">
+      <div class="photo-placeholder-icon">🌺</div>
+      <div class="photo-placeholder-text">Любимое место</div>
+      <div class="photo-upload-hint">+ Добавить</div>
+    </div>
+    <div class="photo-card reveal reveal-delay-2" id="pc6">
+      <input type="file" accept="image/*" onchange="loadPhoto(this,'pc6')">
+      <div class="photo-placeholder-icon">🎉</div>
+      <div class="photo-placeholder-text">Праздник вместе</div>
+      <div class="photo-upload-hint">+ Добавить</div>
+    </div>
+    <div class="photo-card reveal" id="pc7">
+      <input type="file" accept="image/*" onchange="loadPhoto(this,'pc7')">
+      <div class="photo-placeholder-icon">🥰</div>
+      <div class="photo-placeholder-text">Просто мы</div>
+      <div class="photo-upload-hint">+ Добавить</div>
+    </div>
+    <div class="photo-card reveal reveal-delay-1" id="pc8">
+      <input type="file" accept="image/*" onchange="loadPhoto(this,'pc8')">
+      <div class="photo-placeholder-icon">🌙</div>
+      <div class="photo-placeholder-text">Вечер вместе</div>
+      <div class="photo-upload-hint">+ Добавить</div>
+    </div>
+  </div>
+</section>
+
+<!-- 100 REASONS -->
+<section id="reasons">
+  <div class="reasons-header reveal">
+    <div class="section-label" style="justify-content:center;">С любовью</div>
+    <h2 class="section-title" style="text-align:center;">100 причин почему<br>я люблю <em>тебя</em></h2>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--mauve);margin-top:12px;max-width:600px;margin-left:auto;margin-right:auto;">Каждая из этих причин — маленькая частичка того, почему ты стала самым важным человеком в моей жизни</p>
+  </div>
+  <div class="reasons-grid" id="reasonsGrid"></div>
+</section>
+
+<!-- OPEN WHEN -->
+<section id="open-when">
+  <div class="ow-header reveal">
+    <div class="section-label">Для тебя</div>
+    <h2 class="section-title">Открой когда...</h2>
+    <p class="ow-subtitle">Нажми на карточку — внутри ждут слова специально для этого момента</p>
+  </div>
+  <div class="ow-grid" id="owGrid"></div>
+</section>
+
+<!-- FUTURE -->
+<section id="future">
+  <div class="future-header reveal">
+    <div class="section-label" style="justify-content:center;">Впереди</div>
+    <h2 class="section-title" style="text-align:center;">Наше <em>будущее</em></h2>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--mauve);margin-top:10px;">Всё что я хочу прожить рядом с тобой</p>
+  </div>
+  <div class="future-grid">
+    <div class="future-card reveal">
+      <div class="future-icon">🏠</div>
+      <div class="future-card-title">Наш дом</div>
+      <div class="future-card-text">[Напиши о вашем общем доме мечты — каким он будет, где, что там будет. Детали которые вы обсуждали.]</div>
+    </div>
+    <div class="future-card reveal reveal-delay-1">
+      <div class="future-icon">✈️</div>
+      <div class="future-card-title">Путешествия</div>
+      <div class="future-card-text">[Куда хочешь поехать вместе с ней? Страны, города, места о которых мечтаете. Напиши список своих мест.]</div>
+    </div>
+    <div class="future-card reveal reveal-delay-2">
+      <div class="future-icon">👨‍👩‍👧</div>
+      <div class="future-card-title">Семья</div>
+      <div class="future-card-text">[Твои мысли о вашей будущей семье. Всё что ты себе представляешь когда думаешь о будущем с ней.]</div>
+    </div>
+    <div class="future-card reveal">
+      <div class="future-icon">🎯</div>
+      <div class="future-card-title">Мечты</div>
+      <div class="future-card-text">[Общие мечты и цели. Что хотите достичь вместе — карьера, хобби, что-то особенное для вас двоих.]</div>
+    </div>
+    <div class="future-card reveal reveal-delay-1">
+      <div class="future-icon">🥂</div>
+      <div class="future-card-title">Традиции</div>
+      <div class="future-card-text">[Какие традиции хочешь создать? Годовщины, праздники, места которые будете посещать каждый год.]</div>
+    </div>
+    <div class="future-card reveal reveal-delay-2">
+      <div class="future-icon">♾️</div>
+      <div class="future-card-title">Навсегда</div>
+      <div class="future-card-text">Я выбираю тебя сегодня, завтра и каждый день после. Ты — тот человек, с которым я хочу встретить старость.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL QUOTE -->
+<div class="final-section">
+  <div class="final-heart-small">♡</div>
+  <p class="final-quote reveal">
+    "Знаешь, что самое <em>удивительное?</em><br>
+    Я влюбляюсь в тебя заново каждый день —<br>
+    и каждый раз сильнее, чем вчера."
+  </p>
+  <p class="final-sign reveal">— Твой Свят ♡</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-text">Создано с <span class="footer-love">♥</span> специально для Арианы · 2025</p>
+</footer>
+
+<script>
+// ─── CURSOR ───────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+
+// ─── PRELOADER ────────────────────────────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('preloader').classList.add('hide');
+  }, 2800);
+});
+
+// ─── PARTICLES ────────────────────────────────────────────
+const symbols = ['♡','✿','✦','❀','◆','🌸','💕','⋆'];
+const pWrap = document.getElementById('particles');
+for (let i = 0; i < 25; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+  p.style.left = Math.random() * 100 + 'vw';
+  p.style.animationDuration = (10 + Math.random() * 20) + 's';
+  p.style.animationDelay = (-Math.random() * 20) + 's';
+  p.style.fontSize = (0.7 + Math.random() * 1.2) + 'rem';
+  pWrap.appendChild(p);
+}
+
+// ─── NAV SCROLL ───────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ─── REVEAL ON SCROLL ─────────────────────────────────────
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ─── PHOTO UPLOAD ─────────────────────────────────────────
+function loadPhoto(input, cardId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const card = document.getElementById(cardId);
+    card.querySelectorAll('.photo-placeholder-icon,.photo-placeholder-text,.photo-upload-hint').forEach(el => el.remove());
+    const img = document.createElement('img');
+    img.src = e.target.result;
+    card.insertBefore(img, card.firstChild);
+  };
+  reader.readAsDataURL(file);
+}
+
+// ─── 100 REASONS ──────────────────────────────────────────
+const reasons = [
+  "Твоя улыбка — самое красивое, что я когда-либо видел",
+  "Ты делаешь каждый день особенным просто тем, что существуешь",
+  "Твой смех заставляет моё сердце биться быстрее",
+  "Ты умеешь понять меня без слов",
+  "Рядом с тобой я чувствую себя самим собой",
+  "Ты добрая — по-настоящему, до глубины души",
+  "Твои глаза — в них целый мир",
+  "Ты умная, и это так красиво",
+  "Ты никогда не сдаёшься — даже когда тяжело",
+  "Твой характер — сильный и нежный одновременно",
+  "Ты заставляешь меня хотеть быть лучше",
+  "Ты помнишь маленькие вещи — и это значит всё",
+  "С тобой даже тишина уютная",
+  "Ты умеешь слушать — по-настоящему слушать",
+  "Ты честная, и я за это восхищаюсь тобой",
+  "Твоя забота согревает сердце",
+  "Ты смешная — иногда сама того не замечая",
+  "Ты умеешь радоваться мелочам",
+  "С тобой я чувствую, что дома",
+  "Ты никогда не осуждаешь — только поддерживаешь",
+  "Твои объятия — лучшее место в мире",
+  "Ты единственная, с кем я хочу делиться всем",
+  "Ты умеешь видеть хорошее даже в плохих ситуациях",
+  "Твоя преданность — редкая и настоящая",
+  "Ты красивее, чем понимаешь сама",
+  "Ты вдохновляешь меня на мечты",
+  "Рядом с тобой страх исчезает",
+  "Ты доверяешь мне — и это бесценно",
+  "Ты терпелива, особенно когда это сложно",
+  "Твои маленькие жесты говорят больше слов",
+  "Ты умеешь превратить обычный день в праздник",
+  "С тобой я никогда не скучаю",
+  "Ты любишь так сильно, что это физически чувствуется",
+  "Ты — мой любимый человек на земле",
+  "Ты умеешь прощать — и это делает тебя великой",
+  "Твоя нежность — самая настоящая",
+  "Ты думаешь о других — всегда",
+  "Ты упорная — идёшь к своему даже когда трудно",
+  "Твой голос — мелодия для меня",
+  "Ты делаешь мир вокруг себя светлее",
+  "Ты умеешь найти нужные слова в нужный момент",
+  "Ты — моё любимое приключение",
+  "С тобой жизнь обрела смысл",
+  "Ты любишь искренне — без условий",
+  "Ты никогда не заставляешь меня чувствовать себя лишним",
+  "Твоя уверенность вдохновляет",
+  "Ты умная и при этом такая тёплая",
+  "Ты не притворяешься — ты настоящая",
+  "Ты — та, о ком я мечтал",
+  "Рядом с тобой я знаю что всё будет хорошо",
+  "Твои объятия лечат любую грусть",
+  "Ты помнишь, что я люблю — и это трогает",
+  "Ты поддерживаешь меня даже когда сомневаешься",
+  "Твоя сила — тихая, но огромная",
+  "Ты умеешь быть нежной, когда мне это нужно",
+  "Твои мысли всегда интересны мне",
+  "С тобой я хочу встречать каждое утро",
+  "Ты та, кто делает меня счастливым",
+  "Ты любишь меня таким, какой я есть",
+  "Твоя верность — моя опора",
+  "Ты умеешь смеяться над собой — это редко",
+  "С тобой любой маршрут становится приключением",
+  "Ты вдыхаешь жизнь в мои дни",
+  "Твоя энергия заряжает меня",
+  "Ты умеешь удивлять — даже когда я этого не жду",
+  "Ты смотришь на меня так, будто я — весь мир",
+  "Твои идеи всегда интересны",
+  "Ты — мой лучший друг и любовь одновременно",
+  "С тобой я не боюсь мечтать",
+  "Ты умеешь дарить тепло даже в холодные дни",
+  "Твоя интуиция поразительна",
+  "Ты никогда не даёшь мне чувствовать себя одиноким",
+  "Ты любишь меня в моих лучших и худших моментах",
+  "Ты — моё «дома»",
+  "Рядом с тобой всё кажется возможным",
+  "Ты умеешь заботиться тихо — и это самое трогательное",
+  "Твоя искренность — большая ценность",
+  "Ты веришь в меня, даже когда я сам не верю",
+  "Ты смотришь на жизнь с такой глубиной",
+  "Ты умеешь быть счастливой — и это заражает",
+  "Ты любишь так, как хочется быть любимым",
+  "Твоя интуиция меня восхищает",
+  "С тобой я узнал, что такое настоящее счастье",
+  "Ты — моё любимое воспоминание каждого дня",
+  "Ты та, с кем хочу встретить старость",
+  "Твои мечты вдохновляют мои собственные",
+  "Ты умеешь видеть красоту там, где другие не замечают",
+  "С тобой я стал лучше — просто потому что хочу быть достоин тебя",
+  "Ты — причина, по которой я улыбаюсь без причины",
+  "Твоя нежность — моя самая большая привилегия",
+  "Ты умеешь любить так, что это меняет человека",
+  "Ты — моё любимое начало дня и конец вечера",
+  "Ты — та, о которой я думаю засыпая",
+  "Потому что ты — это ты. И этого уже более чем достаточно",
+  "Потому что я люблю тебя больше, чем умею выразить словами",
+  "Потому что с тобой — это не просто жизнь. Это что-то большее ♡"
+];
+
+const grid = document.getElementById('reasonsGrid');
+reasons.forEach((r, i) => {
+  const card = document.createElement('div');
+  card.className = 'reason-card reveal';
+  card.innerHTML = `<div class="reason-num">${String(i+1).padStart(2,'0')}</div><div class="reason-text">${r}</div>`;
+  grid.appendChild(card);
+  obs.observe(card);
+});
+
+// ─── OPEN WHEN ─────────────────────────────────────────────
+const openWhenData = [
+  { icon: '💼', trigger: 'Открой когда ты на работе', msg: 'Привет, моя работящая ♡ Знаешь что? Пока ты там занята и справляешься со всем — я горжусь тобой. Ты делаешь это блестяще. Скоро увидимся, и я обниму тебя так крепко, что весь рабочий день вылетит из головы.' },
+  { icon: '😔', trigger: 'Открой когда нет настроения', msg: 'Эй. Ты не одна. Я знаю, иногда всё кажется серым — и это нормально. Но я хочу, чтобы ты знала: ты самая сильная и красивая даже в самый пасмурный день. Позвони мне. Или просто знай — я рядом.' },
+  { icon: '🌙', trigger: 'Открой когда не можешь уснуть', msg: 'Закрой глаза. Представь, что я рядом. Моя рука у тебя в руке, и я шепчу тебе тихонько: всё хорошо. Ты в безопасности. Ты любима. Спи, моя красавица — завтра будет новый день, и в нём буду я.' },
+  { icon: '🥺', trigger: 'Открой когда скучаешь по мне', msg: 'Я тоже скучаю — прямо сейчас, в эту самую секунду. Знаешь что странно? Когда тебя нет рядом, весь мир немного тусклее. Ты — мой любимый цвет жизни. Скоро увидимся. Считаю минуты ♡' },
+  { icon: '😰', trigger: 'Открой когда тебе страшно', msg: 'Я здесь. Слышишь? Даже сейчас, даже через экран — я с тобой. Страх пройдёт, а я останусь. Ты справишься с этим, потому что ты сильнее, чем кажешься. А если нет — я буду рядом, чтобы держать тебя.' },
+  { icon: '😢', trigger: 'Открой когда хочется плакать', msg: 'Плачь. Это нормально. Слёзы — это не слабость, это то, как сердце освобождается. А когда выплачешься — знай, что мои объятия ждут тебя. Я обниму тебя и никуда не пущу.' },
+  { icon: '🎉', trigger: 'Открой когда тебе хорошо', msg: 'Видишь? Ты счастлива — и это самая красивая ты из всех. Помни этот момент. Запомни, как хорошо может быть. Это — норма для тебя. Ты заслуживаешь именно этого ощущения каждый день ♡' },
+  { icon: '💪', trigger: 'Открой когда нужно больше сил', msg: 'Слушай меня внимательно: ты уже справилась с таким количеством вещей, о которых другие даже не думали. Ты — боец. Красивый, нежный, любимый — и при этом невероятно сильный боец. Вперёд. Ты можешь.' },
+  { icon: '🌧️', trigger: 'Открой когда всё идёт не так', msg: 'Иногда жизнь нарочно проверяет нас на прочность. Но знаешь что? Ты не сломаешься — потому что ты уже проходила через плохие дни и выходила из них. И я не дам тебе упасть. Я тут. Всегда.' },
+  { icon: '🌅', trigger: 'Открой когда ты проснулась', msg: 'Доброе утро, моя любовь ♡ Ещё один день начинается — и в этом дне есть ты. Это уже делает его хорошим. Надеюсь сегодня ты улыбнёшься хотя бы раз — желательно из-за меня.' },
+  { icon: '🌟', trigger: 'Открой когда нужен комплимент', msg: 'Ты невероятно красивая. Ты умная. Ты добрая. Ты смешная. Ты — редкая и настоящая. Ты моя любимая. И ты даже не представляешь, насколько ты особенная — но я вижу это каждый день.' },
+  { icon: '💭', trigger: 'Открой когда сомневаешься в себе', msg: 'Стоп. Ты слышишь этот внутренний голос, который говорит что ты недостаточно хороша? Он врёт. Я знаю тебя — настоящую. И эта настоящая ты — лучше, чем ты о себе думаешь. Верь мне.' },
+  { icon: '🥰', trigger: 'Открой просто потому что', msg: 'Просто хотел сказать: я тебя люблю. Без повода, без причины, без условий. Просто люблю — и это самое простое и самое настоящее чувство из всего, что я когда-либо испытывал.' },
+  { icon: '🌺', trigger: 'Открой когда скучно', msg: 'Скучно? Тогда вот: напиши мне что-то неожиданное. Или вспомни наш смешной момент. Или посмотри на наши фотки здесь. Или просто знай — с тобой рядом мне никогда не скучно ♡' },
+  { icon: '✨', trigger: 'Открой когда тебе одиноко', msg: 'Ты никогда не одна. Даже когда меня нет рядом физически — я думаю о тебе. Прямо сейчас. В эту самую секунду. Ты занимаешь столько места в моём сердце, что одиночеству там просто не осталось места.' },
+  { icon: '🎂', trigger: 'Открой в твой день рождения', msg: 'С днём рождения, моя любимая ♡ Ты появилась на свет — и мир стал лучше. Я счастлив, что судьба привела меня к тебе. Желаю тебе всего, что ты заслуживаешь — а ты заслуживаешь всего самого лучшего.' },
+];
+
+const owGrid = document.getElementById('owGrid');
+openWhenData.forEach(item => {
+  const card = document.createElement('div');
+  card.className = 'ow-card reveal';
+  card.innerHTML = `
+    <div class="ow-card-icon">${item.icon}</div>
+    <div class="ow-card-trigger">${item.trigger}</div>
+    <div class="ow-message">${item.msg}</div>
+    <div class="ow-tap-hint">↓ нажми чтобы открыть</div>
+  `;
+  card.addEventListener('click', () => card.classList.toggle('open'));
+  owGrid.appendChild(card);
+  obs.observe(card);
+});
+</script>
+</body>
+</html>
